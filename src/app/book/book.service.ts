@@ -3,6 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { throwError } from 'rxjs';
 import { Book } from './book';
 
 @Injectable()
@@ -26,7 +27,7 @@ export class BookService{
 
     addBook(book: Book){
         let body = JSON.parse(JSON.stringify(book));
-        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let headers = new Headers({ 'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         if(book.id){    
             console.log("Inside addBook update service():::::::");
@@ -44,6 +45,7 @@ export class BookService{
 
     private handleError(error: Response){
         console.error(error);
-        return Observable.throw(error);
+        return throwError(error);
+        //return Observable.throw(error);
     }
 }

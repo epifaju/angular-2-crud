@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpModule, BrowserXhr } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -11,6 +11,8 @@ import { BookComponent } from './book/book.component';
 import { BookListComponent } from './book/bookList.component';
 import { PageNotFoundComponent } from './others/pageNotFound.component';
 import { HomeComponent } from './book/home.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 
 
 const appRoutes: Routes = [
@@ -26,9 +28,10 @@ const appRoutes: Routes = [
     AppComponent, BookComponent, BookListComponent, HomeComponent, PageNotFoundComponent
   ],
   imports: [
-    BrowserModule, HttpModule, FormsModule,  RouterModule.forRoot(appRoutes)
+    BrowserModule, HttpModule, FormsModule,  RouterModule.forRoot(appRoutes), BrowserModule,
   ],
-  providers: [BookService],
+  providers: [BookService,
+              {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
